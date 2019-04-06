@@ -12,6 +12,7 @@
 #define UART_H_
 
 #include <stdint.h>
+#include "MK64F12.h" /* include peripheral declarations */
 
 /**
  * \brief A mail box type definition for serial port

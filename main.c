@@ -34,7 +34,7 @@ int main(void)
 	/**Enables the UART 0 interrupt*/
 	UART_interrupt_enable(UART_0);
 	/**Enables the UART 0 interrupt in the NVIC*/
-	NVIC_enableInterruptAndPriotity(UART0_IRQ, PRIORITY_10);
+	NVIC_enable_interrupt_and_priotity(UART0_IRQ, PRIORITY_10);
 	/**The following sentences send strings to PC using the UART_put_string function. Also, the string
 	 * is coded with terminal code*/
 	/** VT100 command for text in red and background in cyan*/
@@ -53,7 +53,7 @@ int main(void)
 	UART_put_string(UART_0,"\033[12;10H");
 
 	/**Enables interrupts*/
-	EnableInterrupts;
+	NVIC_global_enable_interrupts;
 
 	for(;;) {
 
