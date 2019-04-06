@@ -110,4 +110,13 @@ void UART_put_char (uart_channel_t uart_channel, uint8_t character)
 		break;
 	}
 }
-void UART_put_string(uart_channel_t uart_channel, int8_t* string){}
+void UART_put_string(uart_channel_t uart_channel, int8_t* string)
+{
+	/* send string till null character*/
+	while (0 != *string )
+	{
+		UART_put_char ( uart_channel, *(string) );
+		string++;
+	}
+
+}
