@@ -50,10 +50,9 @@ int main(void)
 	NVIC_enable_interrupt_and_priotity(UART0_IRQ, PRIORITY_8);
 	/**The following sentences send strings to PC using the UART_put_string function. Also, the string
 	 * is coded with terminal code*/
-	UART_put_string(UART_0,"buenos dias");
+	UART_put_string(UART_0,"buenos dias iteso");
 	/** VT100 command for text in red and background in cyan*/
 	UART_put_string(UART_0,"\033[0;35;43m");
-	UART_put_string(UART_4,"ABC");
 	/*VT100 command for clearing the screen*/
 	UART_put_string(UART_0,"\033[2J");
 	/** VT100 command for text in red and background in green*/
@@ -71,8 +70,8 @@ int main(void)
 	NVIC_global_enable_interrupts;
 
 	for(;;) {
-		UART_put_string(UART_0,"buenos dias");
-		UART_put_string(UART_0,"01234");
+		UART_put_string(UART_0,"buenos dias iteso\n");
+		UART_put_string(UART_0,"01234\n");
 		/*
 		if(g_mail_box_uart_0.flag)
 			{

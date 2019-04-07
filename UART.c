@@ -86,34 +86,34 @@ void UART_put_char (uart_channel_t uart_channel, uint8_t character)
 	{
 	case UART_0:
 		while(0 == (UART0->S1 & UART_S1_TC_MASK ));/* wait until flag is on zero*/
-
-			UART0->D = character ;
+		UART0->D = character ;
 		break;
 	case UART_1:
-		while(0 != (UART1->S1 & UART_S1_TDRE_MASK ));/* wait until flag is on zero*/
+		while(0 == (UART1->S1 & UART_S1_TC_MASK ));/* wait until flag is on zero*/
 		UART1->D = character ;
 		break;
 	case UART_2:
-		while(1 != (UART2->S1 & UART_S1_TDRE_MASK ));/* wait until flag is on zero*/
+		while(0 == (UART2->S1 & UART_S1_TC_MASK ));/* wait until flag is on zero*/
 		UART2->D = character ;
+
 		break;
 	case UART_3:
-		while(1 != (UART3->S1 & UART_S1_TDRE_MASK ));/* wait until flag is on zero*/
+		while(0 == (UART3->S1 & UART_S1_TC_MASK ));/* wait until flag is on zero*/
 		UART3->D = character ;
 		break;
 	case UART_4:
-		if(0 != (UART4->S1 & UART_S1_TDRE_MASK ))/* wait until flag is on zero*/
+		while(0 == (UART4->S1 & UART_S1_TC_MASK ));/* wait until flag is on zero*/
 		UART4->D = character ;
 		break;
 	case UART_5:
-		while(1 != (UART5->S1 & UART_S1_TDRE_MASK ));/* wait until flag is on zero*/
+		while(0 == (UART5->S1 & UART_S1_TC_MASK ));/* wait until flag is on zero*/
 		UART5->D = character ;
 		break;
 	default:
 		break;
 	}
 }
-void UART_put_string(uart_channel_t uart_channel, int8_t* string)
+void UART_put_string(uart_channel_t uart_channel, char* string)
 {
 	/* send string till null character*/
 	while (0 != *string )
@@ -123,5 +123,9 @@ void UART_put_string(uart_channel_t uart_channel, int8_t* string)
 		string++;
 
 	}
+
+}
+void UART0_RX_TX_IRQHandler(void)
+{
 
 }
