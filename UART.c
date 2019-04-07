@@ -24,8 +24,8 @@ void UART_init(uart_channel_t uart_channel, uint32_t system_clk , uart_baud_rate
 		SIM->SCGC4 |= SIM_SCGC4_UART0_MASK ;/* enabling clock*/
 		UART0->C2 &= ~ ( UART_C2_TE_MASK );/*disabling transmitter*/
 		UART0->C2 &= ~ ( UART_C2_RE_MASK );/*disabling receptor*/
-		UART0->BDH |= (SBR>>8) & (UART_BDH_SBR_MASK) ;  /* Copiar los bits UART baud rate [12:8] a los bits SRB del registro UART0_BDH */
-		UART0->BDL |= (SBR) & ( UART_BDL_SBR_MASK );
+		UART0->BDH = (SBR>>8) & (UART_BDH_SBR_MASK) ;  /* Copiar los bits UART baud rate [12:8] a los bits SRB del registro UART0_BDH */
+		UART0->BDL = (SBR) & ( UART_BDL_SBR_MASK );
 		UART0->C4  |= (BFRA) & (UART_C4_BRFA_MASK);
 		/*Habilitar el transmisor y el receptor de la UART en el registro UART0_C2*/
 		UART0->C2 |= ( UART_C2_TE_MASK );/* enabling transmitter*/
@@ -85,27 +85,28 @@ void UART_put_char (uart_channel_t uart_channel, uint8_t character)
 	switch (uart_channel)
 	{
 	case UART_0:
-		while(1 == (UART0->S1 & UART_S1_TDRE_MASK ));/* wait until flag is on zero*/
-		UART0->D = character ;
+		while(0 == (UART0->S1 & UART_S1_TC_MASK ));/* wait until flag is on zero*/
+
+			UART0->D = character ;
 		break;
 	case UART_1:
-		while(1 == (UART1->S1 & UART_S1_TDRE_MASK ));/* wait until flag is on zero*/
+		while(0 != (UART1->S1 & UART_S1_TDRE_MASK ));/* wait until flag is on zero*/
 		UART1->D = character ;
 		break;
 	case UART_2:
-		while(1 == (UART2->S1 & UART_S1_TDRE_MASK ));/* wait until flag is on zero*/
+		while(1 != (UART2->S1 & UART_S1_TDRE_MASK ));/* wait until flag is on zero*/
 		UART2->D = character ;
 		break;
 	case UART_3:
-		while(1 == (UART3->S1 & UART_S1_TDRE_MASK ));/* wait until flag is on zero*/
+		while(1 != (UART3->S1 & UART_S1_TDRE_MASK ));/* wait until flag is on zero*/
 		UART3->D = character ;
 		break;
 	case UART_4:
-		while(1 == (UART4->S1 & UART_S1_TDRE_MASK ));/* wait until flag is on zero*/
+		if(0 != (UART4->S1 & UART_S1_TDRE_MASK ))/* wait until flag is on zero*/
 		UART4->D = character ;
 		break;
 	case UART_5:
-		while(1 == (UART5->S1 & UART_S1_TDRE_MASK ));/* wait until flag is on zero*/
+		while(1 != (UART5->S1 & UART_S1_TDRE_MASK ));/* wait until flag is on zero*/
 		UART5->D = character ;
 		break;
 	default:
