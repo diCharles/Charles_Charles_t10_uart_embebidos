@@ -56,15 +56,16 @@ int main(void)
 	NVIC_global_enable_interrupts;
 
 	for(;;) {
-
+		/*
 		if(g_mail_box_uart_0.flag)
 			{
-				/**Sends to the PCA the received data in the mailbox*/
+
 				UART_put_char (UART_0, g_mail_box_uart_0.mailBox);
 
-				/**clear the reception flag*/
+
 				g_mail_box_uart_0.flag = 0;
 			}
+	*/
 	}
 
 	return 0;
