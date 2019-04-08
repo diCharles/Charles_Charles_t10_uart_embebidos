@@ -8,7 +8,8 @@
 
 #include "UART.h"
 //global g_uart0_mail_box
-uart_mail_box_t global_g_uart0_mail_box  ={0};
+uart_mail_box_t g_mail_box_uart_0  = {0,0};
+
 void UART_init(uart_channel_t uart_channel, uint32_t system_clk , uart_baud_rate_t baud_rate)
 {
 	/* UART baud rate = UART module clock / (16 × (SBR[12:0] + BRFD))*/
@@ -81,7 +82,7 @@ void UART_put_char (uart_channel_t uart_channel, uint8_t character)
 {
 	/* Before transmitting its important to check if the  UART channel
 	 * is not transmitting already checking  flag*/
-	char sended_char= character;
+	char sended_char = character;
 	switch (uart_channel)
 	{
 	case UART_0:
@@ -127,5 +128,19 @@ void UART_put_string(uart_channel_t uart_channel, char* string)
 }
 void UART0_RX_TX_IRQHandler(void)
 {
+	/* Check if the reception is complete*/
+	if(RECEIVE_BUFFER_EMPTY == UART_S1_RDRF(0))
+	{
+
+	/*To clear RFRD flag*/
+	volatile uint32_t dummyRead;
+	dummyRead = UART0->S1;
+	//dummyRead = UART0->D;
+
+	g_mail_box_uart_0.mailBox = UART0->D;
+
+	/*Set mailbox flag to one*/
+	g_mail_box_uart_0.flag = 1;
+	}
 
 }

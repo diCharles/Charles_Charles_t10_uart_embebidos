@@ -14,6 +14,7 @@
 #include <stdint.h>
 #include "MK64F12.h" /* include peripheral declarations */
 
+#define RECEIVE_BUFFER_EMPTY 0
 /**
  * \brief A mail box type definition for serial port
  */

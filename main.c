@@ -18,6 +18,7 @@
 	#include "stdio.h"
 #endif
 /**This is mail box to received the information from the serial port*/
+
 extern uart_mail_box_t g_mail_box_uart_0;
 
 int main(void)
@@ -69,20 +70,24 @@ int main(void)
 	/**Enables interrupts*/
 	NVIC_global_enable_interrupts;
 
-	for(;;) {
-		UART_put_string(UART_0,"buenos dias iteso\n");
-		UART_put_string(UART_0,"01234\n");
-		/*
+	for(;;)
+	{
+
+
+
+
+
 		if(g_mail_box_uart_0.flag)
-			{
+		{
 
-				UART_put_char (UART_0, g_mail_box_uart_0.mailBox);
+			UART_put_char (UART_0, g_mail_box_uart_0.mailBox);
+
+			g_mail_box_uart_0.flag = 0;
+		}
 
 
-				g_mail_box_uart_0.flag = 0;
-			}
-	*/
 	}
+
 
 	return 0;
 }
